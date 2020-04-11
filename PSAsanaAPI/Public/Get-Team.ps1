@@ -10,6 +10,32 @@ function Get-Team {
         The Workspace ID to return teams for.
     .PARAMETER Name
         The team name to return (within the workspace specified by WorkspaceID).
+    .PARAMETER ReturnRaw
+        Returns the raw parent object (which includes metadata like the Offset field used for pagination) instead of just the objects of the specified type.
+
+        Standard result example:
+          {
+          "id": 1000,
+          "name": "Task 1",
+          ...
+          },
+          ...
+        ReturnRaw result example:
+          {
+            "data": [
+              {
+              "id": 1000,
+              "name": "Task 1",
+              ...
+              },
+              ...
+            ],
+            "next_page": {
+              "offset": "yJ0eXAiOiJKV1QiLCJhbGciOiJIRzI1NiJ9",
+              "path": "/tasks?project=1337&limit=5&offset=yJ0eXAiOiJKV1QiLCJhbGciOiJIRzI1NiJ9",
+              "uri": "https://app.asana.com/api/1.0/tasks?project=1337&limit=5&offset=yJ0eXAiOiJKV1QiLCJhbGciOiJIRzI1NiJ9"
+            }
+          }
     .OUTPUTS
         Team object(s).
     .NOTES
@@ -28,6 +54,7 @@ function Get-Team {
         PositionalBinding = $false)]
 
     param (
+        [switch] $ReturnRaw,
 
         [Parameter(Mandatory = $true, ParameterSetName = 'TeamID')]
         [ValidateNotNullOrEmpty()]
@@ -53,6 +80,11 @@ function Get-Team {
     }
 
     $results = Invoke-APIRestMethod -Endpoint $Endpoint
+
+    # If -ReturnRaw parameter is passed, return raw data instead of just objects
+    if( [bool]($results.PSobject.Properties.name -match "data") -and -not $ReturnRaw ) {
+        $results = $results.data
+    }
 
     if ( '' -ne $Name ) {
         Write-Verbose "Filtering by name: $Name"

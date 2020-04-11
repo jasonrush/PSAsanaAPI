@@ -8,6 +8,32 @@ function Verb-Noun {
         The Organization ID of the organization to return.
     .PARAMETER Name
         The Organization ID of the organization to return.
+    .PARAMETER ReturnRaw
+        Returns the raw parent object (which includes metadata like the Offset field used for pagination) instead of just the objects of the specified type.
+
+        Standard result example:
+          {
+          "id": 1000,
+          "name": "Task 1",
+          ...
+          },
+          ...
+        ReturnRaw result example:
+          {
+            "data": [
+              {
+              "id": 1000,
+              "name": "Task 1",
+              ...
+              },
+              ...
+            ],
+            "next_page": {
+              "offset": "yJ0eXAiOiJKV1QiLCJhbGciOiJIRzI1NiJ9",
+              "path": "/tasks?project=1337&limit=5&offset=yJ0eXAiOiJKV1QiLCJhbGciOiJIRzI1NiJ9",
+              "uri": "https://app.asana.com/api/1.0/tasks?project=1337&limit=5&offset=yJ0eXAiOiJKV1QiLCJhbGciOiJIRzI1NiJ9"
+            }
+          }
     .OUTPUTS
         Organization object(s).
     .NOTES
@@ -29,6 +55,7 @@ function Verb-Noun {
         SupportsPaging=$false,
         PositionalBinding=$false)]
 
+        [switch] $ReturnRaw,
         [Parameter(ParameterSetName='ID')]
         [ValidateNotNullOrEmpty()]
         [String] $ID,
@@ -41,6 +68,11 @@ function Verb-Noun {
     # DO THINGS
 
     $results = Invoke-APIRestMethod -Endpoint $Endpoint
+
+    # If -ReturnRaw parameter is passed, return raw data instead of just objects
+    if( [bool]($results.PSobject.Properties.name -match "data") -and -not $ReturnRaw ) {
+        $results = $results.data
+    }
 
     # DO ADDITIONAL THINGS
 

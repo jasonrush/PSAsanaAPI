@@ -87,9 +87,5 @@ function Invoke-APIRestMethod {
 
     $response = Invoke-RestMethod $FullURI -Method $Method -Headers $Headers -Body $Body -ErrorAction Stop
 
-    if( [bool]($response.PSobject.Properties.name -match "data") ) {
-        $response.data
-    }else{
-        $response
-    }
+    $response
 }
