@@ -90,7 +90,6 @@ function Get-User {
         $body['fields'] = $OptFields
     }
     #endregion Common Parameters processing
-$body | fl -prop * | Out-String | Write-Verbose
     $results = Invoke-APIRestMethod -Endpoint $Endpoint -Body $body
 
     # If -ReturnRaw parameter is passed, return raw data instead of just objects
