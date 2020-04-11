@@ -79,6 +79,9 @@ function Invoke-APIRestMethod {
 
     Write-Verbose "Personal Access Token: $personalAccessToken"
     $headers.Add( "Authorization", "Bearer $personalAccessToken" )
+    if( "POST" -eq $Method ){
+        $headers.Add( "Content-Type", "application/json" )
+    }
 
     Write-Verbose "Headers:"
     foreach ( $key in $headers.Keys ) {
