@@ -34,8 +34,8 @@ function Get-Project {
 
     param (
         #region Common Parameters
-        [ValidateRange(1, 100)]
-        [int] $Limit = 100,
+        [ValidateRange(0, 100)]
+        [int] $Limit = 0,
 
         [String] $Offset = '',
 
@@ -91,7 +91,9 @@ function Get-Project {
 
     #region Common Parameters processing
     $body = @{}
-    $body['limit'] = $Limit
+    if( 0 -ne $Limit ){
+        $body['limit'] = $Limit
+    }
     if( '' -ne $Offset ){
         $body['offset'] = $Offset
     }
