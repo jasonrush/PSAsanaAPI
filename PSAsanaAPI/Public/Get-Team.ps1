@@ -22,11 +22,12 @@ function Get-Team {
     .EXAMPLE
         Get-team -WorkspaceID 177987220357060
     #>
+    [CmdletBinding(
+        HelpURI = 'https://github.com/jasonrush/PSAsanaAPI/blob/master/Docs/Get-Team.md',
+        SupportsPaging = $false,
+        PositionalBinding = $false)]
+
     param (
-        [CmdletBinding(
-            HelpURI = 'https://github.com/jasonrush/PSAsanaAPI/blob/master/Docs/Get-Team.md',
-            SupportsPaging = $false,
-            PositionalBinding = $false)]
 
         [Parameter(Mandatory = $true, ParameterSetName = 'TeamID')]
         [ValidateNotNullOrEmpty()]

@@ -23,12 +23,13 @@ function Get-Workspace {
     .EXAMPLE
         Get-Workspace -Name "Personal Projects"
     #>
+    [CmdletBinding(
+        HelpURI = 'https://github.com/jasonrush/PSAsanaAPI/blob/master/Docs/Get-Organization.md',
+        DefaultParameterSetName = 'ID',
+        SupportsPaging = $false,
+        PositionalBinding = $false)]
+
     param (
-        [CmdletBinding(
-            HelpURI = 'https://github.com/jasonrush/PSAsanaAPI/blob/master/Docs/Get-Organization.md',
-            DefaultParameterSetName = 'ID',
-            SupportsPaging = $false,
-            PositionalBinding = $false)]
 
         [Parameter(ParameterSetName = 'ID')]
         [ValidateNotNullOrEmpty()]

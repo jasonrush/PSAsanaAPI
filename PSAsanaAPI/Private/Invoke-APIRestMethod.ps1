@@ -22,12 +22,12 @@ function Invoke-APIRestMethod {
     .EXAMPLE
         Invoke-APIRestMethod -Endpoint 'organizations'
     #>
-    param (
-        [CmdletBinding(
-            HelpURI = 'https://github.com/jasonrush/PSAsanaAPI/blob/master/Docs/Invoke-APIRestMethod.md',
-            SupportsPaging = $false,
-            PositionalBinding = $true)]
+    [CmdletBinding(
+        HelpURI = 'https://github.com/jasonrush/PSAsanaAPI/blob/master/Docs/Invoke-APIRestMethod.md',
+        SupportsPaging = $false,
+        PositionalBinding = $true)]
 
+    param (
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
         [String] $Endpoint,
