@@ -30,7 +30,11 @@ Describe 'Module' {
 
     $functions = (
         'Get-Workspace',
-        'Get-Team'
+        'Get-Team',
+        'Get-Project',
+        'Get-Section',
+        'Get-User',
+        'New-Task'
     )
 
     foreach ($function in $functions) {
